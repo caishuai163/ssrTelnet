@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- 向控制台打印日志 -->
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<param name="Threshold" value="info" /><!-- 控制台为了缩减日志数量，不输出 debug -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss}[%t]%-5p: %c{32} - %m%n" />
+		</layout>
+	</appender>
+
+	
+	<appender name="readable-info" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="/data/logs/testNet2/info.log" />
+		<param name="Encoding" value="UTF-8" />
+		<param name="MaxFileSize" value="5MB" />
+		<param name="MaxBackupIndex" value="20" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss}[%t]%-5p: %c{32} - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="DEBUG" />
+			<param name="levelMax" value="INFO" />
+		</filter>
+	</appender>
+	
+	<appender name="readable-error" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="/data/logs/testNet2/error.log" />
+		<param name="Encoding" value="UTF-8" />
+		<param name="MaxFileSize" value="5MB" />
+		<param name="MaxBackupIndex" value="20" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss}[%t]%-5p: %c{32} - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="WARN" />
+			<param name="levelMax" value="FATAL" />
+		</filter>
+	</appender>
+	<!-- 其他默认所有向控制台和人可读输出，不输出 DEBUG  -->
+	<root>
+		<priority value ="info"/>
+		<appender-ref ref="console" />
+		<appender-ref ref="readable-info" />
+		<appender-ref ref="readable-error" />
+	</root>
+	
+</log4j:configuration>
