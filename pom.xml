@@ -92,6 +92,18 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>5.1.5.RELEASE</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/dnsjava/dnsjava -->
+		<dependency>
+			<groupId>dnsjava</groupId>
+			<artifactId>dnsjava</artifactId>
+			<version>2.1.8</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.eclipse.jgit/org.eclipse.jgit -->
+		<dependency>   
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit</artifactId>
+			<version>5.3.0.201903130848-r</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<resources>
