@@ -1,79 +1,79 @@
 package net.tools;
 
 public class Constants {
-    /***
-     * åˆ é™¤çŠ¶æ€
-     */
-    public static enum DeleteStatus {
-        NORMAL("0", "NORMAL", "æ­£å¸¸"), DELETE("1", "DELETE", "åˆ é™¤");
-        private DeleteStatus(String value, String name, String desc) {
-            this.value = value;
-            this.name = name;
-            this.desc = desc;
-        }
+	/***
+	 * É¾³ı×´Ì¬
+	 */
+	public static enum DeleteStatus {
+		NORMAL("0", "NORMAL", "Õı³£"), DELETE("1", "DELETE", "É¾³ı");
+		private DeleteStatus(String value, String name, String desc) {
+			this.value = value;
+			this.name = name;
+			this.desc = desc;
+		}
 
-        private final String value;
-        private final String name;
-        private final String desc;
+		private final String value;
+		private final String name;
+		private final String desc;
 
-        public String getValue() {
-            return value;
-        }
+		public String getValue() {
+			return value;
+		}
 
-        public String getName() {
-            return name;
-        }
+		public String getName() {
+			return name;
+		}
 
-        public String getDesc() {
-            return desc;
-        }
-    }
+		public String getDesc() {
+			return desc;
+		}
+	}
 
-    /***
-     * Result code
-     */
-    public static enum ResultCode {
-        /** æˆåŠŸ */
-        SUCCESS("200", "æˆåŠŸ"), NULL_DATA("205", "æ— æ•°æ®"),
-        /** æ²¡æœ‰ç™»å½• */
-        NOT_LOGIN("400", "æ²¡æœ‰ç™»å½•"),
+	/***
+	 * Result code
+	 */
+	public static enum ResultCode {
+		/** ³É¹¦ */
+		SUCCESS("200", "³É¹¦"), NULL_DATA("205", "ÎŞÊı¾İ"),
+		/** Ã»ÓĞµÇÂ¼ */
+		NOT_LOGIN("400", "Ã»ÓĞµÇÂ¼"),
 
-        /** å‘ç”Ÿå¼‚å¸¸ */
-        EXCEPTION("401", "å‘ç”Ÿå¼‚å¸¸"),
+		/** ·¢ÉúÒì³£ */
+		EXCEPTION("401", "·¢ÉúÒì³£"),
 
-        /** ç³»ç»Ÿé”™è¯¯ */
-        SYS_ERROR("402", "ç³»ç»Ÿé”™è¯¯"),
+		/** ÏµÍ³´íÎó */
+		SYS_ERROR("402", "ÏµÍ³´íÎó"),
 
-        /** å‚æ•°é”™è¯¯ */
-        PARAMS_ERROR("403", "å‚æ•°é”™è¯¯ "),
+		/** ²ÎÊı´íÎó */
+		PARAMS_ERROR("403", "²ÎÊı´íÎó "),
 
-        /** ä¸æ”¯æŒæˆ–å·²ç»åºŸå¼ƒ */
-        NOT_SUPPORTED("410", "ä¸æ”¯æŒæˆ–å·²ç»åºŸå¼ƒ"),
+		/** ²»Ö§³Ö»òÒÑ¾­·ÏÆú */
+		NOT_SUPPORTED("410", "²»Ö§³Ö»òÒÑ¾­·ÏÆú"),
 
-        /** AuthCodeé”™è¯¯ */
-        INVALID_AUTHCODE("444", "æ— æ•ˆçš„AuthCode"),
+		/** AuthCode´íÎó */
+		INVALID_AUTHCODE("444", "ÎŞĞ§µÄAuthCode"),
 
-        /** å¤ªé¢‘ç¹çš„è°ƒç”¨ */
-        TOO_FREQUENT("445", "å¤ªé¢‘ç¹çš„è°ƒç”¨"),
+		/** Ì«Æµ·±µÄµ÷ÓÃ */
+		TOO_FREQUENT("445", "Ì«Æµ·±µÄµ÷ÓÃ"),
 
-        /** æœªçŸ¥çš„é”™è¯¯ */
-        UNKNOWN_ERROR("499", "æœªçŸ¥é”™è¯¯");
+		/** Î´ÖªµÄ´íÎó */
+		UNKNOWN_ERROR("499", "Î´Öª´íÎó");
 
-        private ResultCode(String val, String msg) {
-            this.val = val;
-            this.msg = msg;
-        }
+		private ResultCode(String val, String msg) {
+			this.val = val;
+			this.msg = msg;
+		}
 
-        private String val;
-        private String msg;
+		private String val;
+		private String msg;
 
-        public String val() {
-            return val;
-        }
+		public String val() {
+			return val;
+		}
 
-        public String msg() {
-            return msg;
-        }
+		public String msg() {
+			return msg;
+		}
 
-    }
+	}
 }

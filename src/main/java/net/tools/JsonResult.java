@@ -2,62 +2,60 @@ package net.tools;
 
 public class JsonResult {
 
-    private String code;// ç»“æœç¼–ç 
-    private String message;// ç»“æœæè¿°
-    private Object data;
+	private String code;// ½á¹û±àÂë
+	private String message;// ½á¹ûÃèÊö
+	private Object data;
 
-    public JsonResult() {
-        this.setCode(Constants.ResultCode.SUCCESS);
-        this.setMessage(Constants.ResultCode.SUCCESS.msg());
+	public JsonResult() {
+		this.setCode(Constants.ResultCode.SUCCESS);
+		this.setMessage(Constants.ResultCode.SUCCESS.msg());
 
-    }
+	}
 
-    public JsonResult(Constants.ResultCode code) {
-        this.setCode(code);
-        this.setMessage(code.msg());
-    }
+	public JsonResult(Constants.ResultCode code) {
+		this.setCode(code);
+		this.setMessage(code.msg());
+	}
 
-    public JsonResult(Constants.ResultCode code, String message) {
-        this.setCode(code);
-        this.setMessage(message);
-    }
+	public JsonResult(Constants.ResultCode code, String message) {
+		this.setCode(code);
+		this.setMessage(message);
+	}
 
-    public JsonResult(Constants.ResultCode code, String message, Object data) {
-        this.setCode(code);
-        this.setMessage(message);
-        this.setData(data);
-    }
+	public JsonResult(Constants.ResultCode code, String message, Object data) {
+		this.setCode(code);
+		this.setMessage(message);
+		this.setData(data);
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setCode(Constants.ResultCode code) {
-        this.code = code.val();
-        this.message = code.msg();
-    }
+	public void setCode(Constants.ResultCode code) {
+		this.code = code.val();
+		this.message = code.msg();
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public String getMessage() {
+		return message;
+	}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
-    public Object getData() {
-        return data;
-    }
+	public Object getData() {
+		return data;
+	}
 
-    public void setData(Object data) {
-        this.data = data;
-    }
+	public void setData(Object data) {
+		this.data = data;
+	}
 
-    @Override
-    public String toString() {
-        return "JsonResult [code=" + code + ", message=" + message + ", data="
-                + data + "]";
-    }
-    
-    
+	@Override
+	public String toString() {
+		return "JsonResult [code=" + code + ", message=" + message + ", data=" + data + "]";
+	}
+
 }

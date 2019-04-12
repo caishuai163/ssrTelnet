@@ -40,7 +40,7 @@
                   <resource>META-INF/spring.schemas</resource>
                 </transformer>
                 <transformer>
-                  <mainClass>aaa.TEst</mainClass>
+                  <mainClass>ssrmonitor.QuartzApplication</mainClass>
                 </transformer>
               </transformers>
               <filters>
@@ -59,6 +59,14 @@
       </plugin>
     </plugins>
   </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.16.18</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
