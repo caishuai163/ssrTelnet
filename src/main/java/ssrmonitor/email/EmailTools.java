@@ -50,23 +50,25 @@ public class EmailTools {
 			email.send();
 		} catch (Exception e) {
 			logger.error("send email failed. msg:", e);
-			sendSysError("·¢ËÍÓÊ¼şÒì³£", e);
+			sendSysError("å‘é€é‚®ä»¶å¼‚å¸¸", e);
 		}
 	}
 
 	public void sendChangePortMsg(String ip, int port) {
 		String replace = StringUtils.replace(emailSenderLoader.getChangePortMsgTemplate(), "{serverIp}", ip);
 		replace = StringUtils.replace(replace, "{serverPort}", String.valueOf(port));
-		replace = StringUtils.replace(replace, "{datetime}", DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss.S"));
-		email("ÔÆ·şÎñÆ÷¿ª·Å¶Ë¿Ú·¢Éú±ä»¯", replace, emailSenderLoader.getEmailto());
-		logger.info("·¢ËÍ¶Ë¿Ú±ä»¯Í¨Öª½áÊø");
+		replace = StringUtils.replace(replace, "{datetime}",
+				DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss.S"));
+		email("äº‘æœåŠ¡å™¨å¼€æ”¾ç«¯å£å‘ç”Ÿå˜åŒ–", replace, emailSenderLoader.getEmailto());
+		logger.info("å‘é€ç«¯å£å˜åŒ–é€šçŸ¥ç»“æŸ");
 	}
 
 	public void sendSysError(String msg, Throwable e) {
 		String replace = StringUtils.replace(emailSenderLoader.getSysyemErrorTemplate(), "{errorMsg}", encode(msg));
 		replace = StringUtils.replace(replace, "{errorInfo}", encode(Throwables.getStackTraceAsString(e)));
-		replace = StringUtils.replace(replace, "{datetime}", DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss.S"));
-		emailBySelf("ÔÆ·şÎñÆ÷¼à¿ØÒì³£", replace, "461588977@qq.com");
+		replace = StringUtils.replace(replace, "{datetime}",
+				DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss.S"));
+		emailBySelf("äº‘æœåŠ¡å™¨ç›‘æ§å¼‚å¸¸", replace, "461588977@qq.com");
 	}
 
 	private String encode(String args) {

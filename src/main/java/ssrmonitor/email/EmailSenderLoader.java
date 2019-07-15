@@ -19,7 +19,7 @@ public class EmailSenderLoader {
 
 	@Value("${ssr.email.emailSenderJsonConfig}")
 	private String emailSenderJsonConfig;
-	@Value("${ssr.email.sysyemErrorTemplate}")
+	@Value("${ssr.email.systemErrorTemplate}")
 	@Getter
 	private String sysyemErrorTemplate;
 	@Value("${ssr.email.changePortMsgTemplate}")

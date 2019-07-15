@@ -16,7 +16,7 @@ import ssrmonitor.vultr.ChangePortService;
 @Service
 public class TestSsrPort {
     private static final Logger logger = LoggerFactory
-            .getLogger(QuartzApplication.class);
+            .getLogger(TestSsrPort.class);
     @Autowired
     private ChangePortService changePortService;
     @Autowired
@@ -29,6 +29,8 @@ public class TestSsrPort {
     private Integer port;
     @Value("${ssr.ssh.port}")
     private int sshPort;
+    @Value("${ssr.email.isopen:true}")
+    private boolean emailIsOpen;
 
     public void aaa() {
         port++;
@@ -53,7 +55,9 @@ public class TestSsrPort {
                         // if telnet success and not first telnet。 it means port
                         // changed。
                         gitTools.syncConfigInGit(ip, port);
-                        emailTools.sendChangePortMsg(ip, port);
+                        if (emailIsOpen) {
+                        	emailTools.sendChangePortMsg(ip, port);
+						}
                         
                     }
                     return;
