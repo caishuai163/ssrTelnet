@@ -10,73 +10,81 @@ import net.tools.Constants;
 import net.tools.JsonResult;
 import net.tools.PTUtil;
 import ssrmonitor.email.EmailTools;
+import ssrmonitor.git.GitTools;
 import ssrmonitor.vultr.ChangePortService;
 
 @Service
 public class TestSsrPort {
-	private static final Logger logger = LoggerFactory.getLogger(QuartzApplication.class);
-	@Autowired
-	private ChangePortService changePortService;
-	@Autowired
-	private EmailTools emailTools;
-	@Value("${ssr.ip}")
-	private String ip;
-	@Value("${ssr.port.start}")
-	private Integer port;
+    private static final Logger logger = LoggerFactory
+            .getLogger(QuartzApplication.class);
+    @Autowired
+    private ChangePortService changePortService;
+    @Autowired
+    private EmailTools emailTools;
+    @Autowired
+    private GitTools gitTools;
+    @Value("${ssr.ip}")
+    private String ip;
+    @Value("${ssr.port.start}")
+    private Integer port;
+    @Value("${ssr.ssh.port}")
+    private int sshPort;
 
-	public void aaa() {
-		port++;
-		logger.info("ip:{},port:{}", ip, port);
-		emailTools.sendSysError("»úÆ÷ÎŞ·¨pingÍ¨", new RuntimeException(ip + "ÒÑ¾­ÎŞ·¨pingÍ¨£¬Çë¼°Ê±¸ü»»·şÎñÆ÷ÒÔ¼°¸ü¸Ä³ÌĞòÅäÖÃ"));
+    public void aaa() {
+        port++;
+        logger.info("ip:{},port:{}", ip, port);
+        emailTools.sendSysError("æœºå™¨æ— æ³•pingé€š",
+            new RuntimeException(ip + "å·²ç»æ— æ³•pingé€šï¼Œè¯·åŠæ—¶æ›´æ¢æœåŠ¡å™¨ä»¥åŠæ›´æ”¹ç¨‹åºé…ç½®"));
 
-	}
+    }
 
-	public void run() {
+    public void run() {
 
-		if (isPingSuccess()) {
-			boolean isFirst = true;
-			while (port <= 60000) {
-				if (isTelnetSuccess()) {
-					if (!isFirst) {
-						// if telnet success and not first telnet¡£ it means port changed¡£
-						emailTools.sendChangePortMsg(ip, port);
-					}
-					return;
-				}
-				isFirst = false;
-				port++;
-				changePortService.changePort(port);
-				logger.info("±ä¸ü¶Ë¿Ú½áÊø£¬×¼±¸²âÊÔ¶Ë¿Ú:{}", port);
-			}
-			port = 10000;
-			emailTools.sendSysError("¶Ë¿ÚºÅ±»ÓÃ¾¡", new RuntimeException("¶Ë¿ÚºÅÒÑ¾­Ñ­»·¹ı60000"));
-			return;
-		}
-		emailTools.sendSysError("»úÆ÷ÎŞ·¨pingÍ¨", new RuntimeException(ip + "ÒÑ¾­ÎŞ·¨pingÍ¨£¬Çë¼°Ê±¸ü»»·şÎñÆ÷ÒÔ¼°¸ü¸Ä³ÌĞòÅäÖÃ"));
+        if (isPingSuccess()) {
+            boolean isFirst = true;
+            while (port <= 60000) {
+                if (!PTUtil.isTelnetSuccess(ip, sshPort)) {
+                    emailTools.sendSysError("SSHç«¯å£æ— æ³•ä½¿ç”¨",
+                        new RuntimeException("SSHç«¯å£æ— æ³•ä½¿ç”¨"));
+                    return;
+                }
+                if (PTUtil.isTelnetSuccess(ip, port)) {
+                    if (!isFirst) {
+                        // if telnet success and not first telnetã€‚ it means port
+                        // changedã€‚
+                        gitTools.syncConfigInGit(ip, port);
+                        emailTools.sendChangePortMsg(ip, port);
+                        
+                    }
+                    return;
+                }
+                isFirst = false;
+                port++;
+                changePortService.changePort(port);
+                logger.info("å˜æ›´ç«¯å£ç»“æŸï¼Œå‡†å¤‡æµ‹è¯•ç«¯å£:{}", port);
+            }
+            port = 10000;
+            emailTools.sendSysError("ç«¯å£å·è¢«ç”¨å°½",
+                new RuntimeException("ç«¯å£å·å·²ç»å¾ªç¯è¿‡60000"));
+            return;
+        }
+        emailTools.sendSysError("æœºå™¨æ— æ³•pingé€š",
+            new RuntimeException(ip + "å·²ç»æ— æ³•pingé€šï¼Œè¯·åŠæ—¶æ›´æ¢æœåŠ¡å™¨ä»¥åŠæ›´æ”¹ç¨‹åºé…ç½®"));
 
-	}
+    }
 
-	public boolean isPingSuccess() {
-		for (int i = 0; i < 10; i++) {
-			logger.info("µÚ{}´Î¿ªÊ¼ping {}", i + 1, ip);
-			JsonResult pingResult = PTUtil.pingResult(ip, 1000);
-			logger.info("µÚ{}´Îping {} ½áÊø£¬½á¹û£º{}", i + 1, ip, pingResult);
-			if (pingResult.getCode().equals(Constants.ResultCode.SUCCESS.val())) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public boolean isPingSuccess() {
+        for (int i = 0; i < 10; i++) {
+            logger.info("ç¬¬{}æ¬¡å¼€å§‹ping {}", i + 1, ip);
+            JsonResult pingResult = PTUtil.pingResult(ip, 1000);
+            logger.info("ç¬¬{}æ¬¡ping {} ç»“æŸï¼Œç»“æœï¼š{}", i + 1, ip, pingResult);
+            if (pingResult.getCode()
+                    .equals(Constants.ResultCode.SUCCESS.val())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public boolean isTelnetSuccess() {
-		for (int i = 0; i < 10; i++) {
-			logger.info("¿ªÊ¼telnet {}:{}", ip, port);
-			JsonResult telnetResult = PTUtil.telnetResult(ip, port, 5000);
-			logger.info("telnet {}:{} ½áÊø¡£½á¹û£º{}", ip, port, telnetResult);
-			if (telnetResult.getCode().equals(Constants.ResultCode.SUCCESS.val())) {
-				return true;
-			}
-		}
-		return false;
-	}
+   
 }
