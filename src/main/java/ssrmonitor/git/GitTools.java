@@ -44,6 +44,9 @@ public class GitTools {
 					});
 					logger.info("原始文件信息{}", configs);
 					for (int i = configs.size() - 1; i >= 0; i--) {
+						if (configs.get(i).isNotDelete()) {
+							continue;
+						}
 						boolean telnetSuccess = PTUtil.isTelnetSuccess(configs.get(i).getIp(),
 								configs.get(i).getPortInt());
 						if (!telnetSuccess) {

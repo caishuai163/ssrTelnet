@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import net.tools.Constants;
-import net.tools.JsonResult;
 import net.tools.PTUtil;
 import ssrmonitor.email.EmailTools;
 import ssrmonitor.git.GitTools;
@@ -42,7 +40,7 @@ public class TestSsrPort {
 
     public void run() {
 
-        if (isPingSuccess()) {
+        if (PTUtil.isPingSuccess(ip)) {
             boolean isFirst = true;
             while (port <= 60000) {
                 if (!PTUtil.isTelnetSuccess(ip, sshPort)) {
@@ -76,19 +74,4 @@ public class TestSsrPort {
             new RuntimeException(ip + "已经无法ping通，请及时更换服务器以及更改程序配置"));
 
     }
-
-    public boolean isPingSuccess() {
-        for (int i = 0; i < 10; i++) {
-            logger.info("第{}次开始ping {}", i + 1, ip);
-            JsonResult pingResult = PTUtil.pingResult(ip, 1000);
-            logger.info("第{}次ping {} 结束，结果：{}", i + 1, ip, pingResult);
-            if (pingResult.getCode()
-                    .equals(Constants.ResultCode.SUCCESS.val())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-   
 }
